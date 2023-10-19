@@ -28,7 +28,6 @@ He triat  D
 Aniré a 2 0
 Pasa feta!
 
-Finalment mostrarà la recompensa acomulada i la descomptada (des_rew=r1+r2\*gamma^1+r3\*gamma*\\*2...)
------------
+Finalment mostrarà la recompensa acomulada i la descomptada (des_rew=r1+r2\*gamma^1+r3\*gamma\*\*2...)
 
 Si es fa python script.py s'executarà el run.py començant cada cop a una casella diferent
