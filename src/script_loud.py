@@ -14,15 +14,15 @@ with open("resultats.txt", "w") as file:
 
 # Recorre totes les cel·les possibles
 print("Entrenant")
-# for fila in range(tamany_graella[0]):
-#     for columna in range(tamany_graella[1]):
-#         execucio += 1
-#         subprocess.run(
-#             ["python", "run.py", f"{fila},{columna}"], capture_output=True, text=True
-#         )
 for fila in range(tamany_graella[0]):
-    execucio += 1
-    subprocess.run(["python", "run.py", f"{fila},{1}"], capture_output=True, text=True)
+     for columna in range(tamany_graella[1]):
+         execucio += 1
+         subprocess.run(
+             ["python", "run.py", f"{fila},{columna}"], capture_output=True, text=True
+        )
+#for fila in range(tamany_graella[0]):
+#    execucio += 1
+#    subprocess.run(["python", "run.py", f"{fila},{1}"], capture_output=True, text=True)
 
     # Afegit: Llegeix el fitxer de resultats
 with open("resultats.txt", "r") as file:
@@ -47,21 +47,28 @@ if entry:
 # ][0]
 # print(f"Discounted Return per a Discounted error = 0.0: {discounted_return_0}")
 
+for idx, resultat in enumerate(resultats, start=1):
+    print(f"Execució {idx} a {resultat['Inici']}: Return: {resultat['Puntuacio final']}, Discounted Return: {resultat['Discounted error']}")
 # print(resultats)
-max_discounted_error = -float("inf")  # Inicialitza amb el valor mínim possible
 max_execucio_info = None
+# Obtenir l'element amb el Discounted error més gran
+max_execucio_info = max(resultats, key=lambda x: x['Discounted error'])
+# Imprimir les dades de l'element
+print(f"La millor casella de sortida és: {max_execucio_info['Inici']}")
 
-# Recorre les dades de resultats
-for key, value in resultats:
-    print(f"{key}: {value}")
-    if key == "Discounted error" and float(value) > max_discounted_error:
-        max_discounted_error = float(value)
-        max_execucio_info = resultats
 
-# Imprimeix l'execució amb el valor de discounted error més gran
-if max_execucio_info is not None:
-    print(f"Execució amb el valor de discounted error més gran:")
-    for key, value in max_execucio_info:
-        print(f"{key}: {value}")
-else:
-    print("No s'ha trobat cap execució amb Discounted error.")
+print("Anem a passar-nos el joc!\n\n")
+# Obtenir les coordenades de l'execució amb el Discounted error més gran
+coor = max_execucio_info['Inici'][1:-1].split(',')
+fila = coor[0].strip()
+columna = coor[1].strip()
+
+# Executar run.py amb les coordenades corresponents i guardar l'output
+result = subprocess.run(
+    ["python", "run.py", f"{fila},{columna}"],
+    capture_output=True,
+    text=True
+)
+
+# Imprimir l'output
+print(result.stdout)

@@ -5,7 +5,7 @@ import random
 class MarejatError(Exception):
     pass
 
-
+random.seed(42)
 
 
 class Personatge:
