@@ -18,7 +18,7 @@ if len(sys.argv) > 1:
     inici_str = sys.argv[1]
 
     # Converteix la cadena de text a una tupla de coordenades
-    inici = tuple(map(int, inici_str.split(',')))
+    inici = tuple(map(int, inici_str.split(",")))
 else:
     inici = (1, 0)
 
@@ -37,12 +37,14 @@ recompensa = Recompensa()
 print("Iniciant personatge\n")
 personatge = Personatge(graella, estat_inicial, recompensa)
 
+resultats_dict = {}
+
 try:
     while True:
         print("Vaig a moure'm!")
-        nova_fila, nova_columna=personatge.moure()
+        nova_fila, nova_columna = personatge.moure()
         print("Pasa feta!\n")
-        
+
         if personatge.ha_arribat_a_la_final():
             break
 
@@ -54,5 +56,13 @@ except MarejatError as e:
 
 puntuacio_final, discounted_error = recompensa.mostrar_puntuacio()
 
-print(f'Puntuació final: {puntuacio_final}')
-print(f'Discounted retunr: {discounted_error}')
+print(f"Puntuació final: {puntuacio_final}")
+print(f"Discounted retunr: {discounted_error}")
+resultats_dict["Inici"] = inici
+resultats_dict["Puntuacio final"] = puntuacio_final
+resultats_dict["Discounted error"] = discounted_error
+
+# Escriu el diccionari a un fitxer (suposant que el nom de l'arxiu és 'resultats.txt')
+with open("resultats.txt", "a") as file:
+    for key, value in resultats_dict.items():
+        file.write(f"{key}: {value}\n")
