@@ -64,5 +64,10 @@ resultats_dict["Discounted error"] = discounted_error
 
 # Escriu el diccionari a un fitxer (suposant que el nom de l'arxiu és 'resultats.txt')
 with open("resultats.txt", "a") as file:
-    for key, value in resultats_dict.items():
-        file.write(f"{key}: {value}\n")
+    # Canvia aquest bucle per l'escriptura
+    if "Inici" in resultats_dict:
+        file.write(f"Inici: {resultats_dict['Inici']}\n")
+    if "Puntuacio final" in resultats_dict:
+        file.write(f"Puntuacio final: {resultats_dict['Puntuacio final']}\n")
+    if "Discounted error" in resultats_dict:
+        file.write(f"Discounted error: {resultats_dict['Discounted error']}\n")

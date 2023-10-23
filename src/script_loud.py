@@ -26,28 +26,20 @@ for fila in range(tamany_graella[0]):
 
     # Afegit: Llegeix el fitxer de resultats
 with open("resultats.txt", "r") as file:
+    entry = {}
     for line in file:
         key, value = line.strip().split(": ")
-        resultats.append((key, value))
+        # Si és el principi d'una nova entrada
+        if key == "Inici":
+            if entry:
+                resultats.append(entry)
+            entry = {"Inici": value}
+        else:
+            entry[key] = float(value)
 
-        # print(
-        #     f"Execució {execucio} a ({fila},{columna}): Return: {puntuacio_final}, Discounted Return: {discounted_return}"
-        # )
-
-for key, value in resultats:
-    print(f"{key}: {value}")
-
-# get a list of all "Discounted Return" values
-discounted_error_list = [
-    float(value) for key, value in resultats if key == "Discounted error"
-]
-# print the maximum value and also "Inici" value of the maximum value
-max_discounted_error = max(discounted_error_list)
-max_execucio_info = [
-    key for key, value in resultats if value == str(max_discounted_error)
-][0]
-print(f"Maximum discounted error: {max_discounted_error}")
-print(f"Execucio amb el valor màxim: {max_execucio_info}")
+# Afegir l'última entrada
+if entry:
+    resultats.append(entry)
 
 # print value of "Discounted Return" for Discounted error = 0.0
 # discounted_return_0 = [
@@ -55,4 +47,21 @@ print(f"Execucio amb el valor màxim: {max_execucio_info}")
 # ][0]
 # print(f"Discounted Return per a Discounted error = 0.0: {discounted_return_0}")
 
-print(resultats)
+# print(resultats)
+max_discounted_error = -float("inf")  # Inicialitza amb el valor mínim possible
+max_execucio_info = None
+
+# Recorre les dades de resultats
+for key, value in resultats:
+    print(f"{key}: {value}")
+    if key == "Discounted error" and float(value) > max_discounted_error:
+        max_discounted_error = float(value)
+        max_execucio_info = resultats
+
+# Imprimeix l'execució amb el valor de discounted error més gran
+if max_execucio_info is not None:
+    print(f"Execució amb el valor de discounted error més gran:")
+    for key, value in max_execucio_info:
+        print(f"{key}: {value}")
+else:
+    print("No s'ha trobat cap execució amb Discounted error.")
