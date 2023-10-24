@@ -4,7 +4,6 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 # Assigna els valors des del fitxer de configuració
-posibles_moviments = config['Configuracio']['posibles_moviments'].split(',')
 reward_prohibit = float(config['Configuracio']['reward_prohibit'])
 reward_fora = float(config['Configuracio']['reward_fora'])
 reward_blank = float(config['Configuracio']['reward_blank'])
