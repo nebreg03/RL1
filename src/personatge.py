@@ -130,7 +130,7 @@ class Personatge:
             return "R"
 
 
-estat_Test = (0, 0)
-estat_Test2 = (0, 1)
-moviment = Personatge.trobar_moviment(estat_Test, estat_Test2)
-policy = Personatge.llegir_policy(moviment)
+# estat_Test = (0, 0)
+# estat_Test2 = (0, 1)
+# moviment = Personatge.trobar_moviment(estat_Test, estat_Test2)
+# policy = Personatge.llegir_policy(moviment)

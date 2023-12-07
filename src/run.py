@@ -1,5 +1,6 @@
 import sys
-import random
+import os
+
 from estat import *
 from personatge import *
 from recompensa import *
@@ -20,7 +21,7 @@ if len(sys.argv) > 1:
     # Converteix la cadena de text a una tupla de coordenades
     inici = tuple(map(int, inici_str.split(",")))
 else:
-    inici = (0, 0)
+    inici = (1, 0)
 
 estat_inicial = graella[inici[0]][inici[1]]
 
@@ -54,6 +55,7 @@ try:
 except MarejatError as e:
     print(e)
 
+
 puntuacio_final, discounted_error = recompensa.mostrar_puntuacio()
 
 print(f"Puntuació final: {puntuacio_final}")
@@ -62,12 +64,12 @@ resultats_dict["Inici"] = inici
 resultats_dict["Puntuacio final"] = puntuacio_final
 resultats_dict["Discounted error"] = discounted_error
 
-# Escriu el diccionari a un fitxer (suposant que el nom de l'arxiu és 'resultats.txt')
-with open("resultats.txt", "a") as file:
-    # Canvia aquest bucle per l'escriptura
-    if "Inici" in resultats_dict:
-        file.write(f"Inici: {resultats_dict['Inici']}\n")
-    if "Puntuacio final" in resultats_dict:
-        file.write(f"Puntuacio final: {resultats_dict['Puntuacio final']}\n")
-    if "Discounted error" in resultats_dict:
-        file.write(f"Discounted error: {resultats_dict['Discounted error']}\n")
+# Escriure els resultats a un fitxer
+try:
+    output_file = os.path.join(os.path.dirname(__file__), "resultats.txt")
+    with open(output_file, "a") as file: 
+        for key, value in resultats_dict.items():
+            file.write(f"{key}: {value}\n")
+except Exception as e:
+    print(f"NO s'ha pogut llegir bé l'arxiu: {e}")
+

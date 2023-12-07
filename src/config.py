@@ -1,8 +1,10 @@
 import configparser
 
 config = configparser.ConfigParser()
-config.read('config.ini')
-
+config.read('configuration\config.ini')
+#if it's empty rise an error
+if not config.sections():
+    raise Exception("NO s'ha pogut llegir el fitxer de configuració!")
 # Assigna els valors des del fitxer de configuració
 reward_prohibit = float(config['Configuracio']['reward_prohibit'])
 reward_fora = float(config['Configuracio']['reward_fora'])
@@ -18,7 +20,7 @@ policy_file = config['Configuracio']['policy_file']
 
 def llegir_policies():
     try:
-        with open(f'policies/{policy_file}', 'r') as file:
+        with open(f'src\policies\{policy_file}', 'r') as file:
             policies_data = file.readlines()
         policies = []
         for line in policies_data:

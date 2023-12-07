@@ -12,7 +12,7 @@ class Estat:
             "reward": 0,
             "fisica": "    -    "
         }
-
+    
     def afegir_propietat(self, clau, valor):
         self.propietats[clau] = valor
         
