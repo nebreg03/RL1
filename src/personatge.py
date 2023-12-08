@@ -11,7 +11,6 @@ class MarejatError(Exception):
 random.seed(42)
 
 
-
 class Personatge:
     def __init__(self, graella, estat_inicial, recompensa):
         self.graella = graella
@@ -20,6 +19,7 @@ class Personatge:
         self.recompensa = recompensa
         self.iteraccio = 0
         self.fora = False
+        self.final = False
 
     def accio_reward(self):
         self.iteraccio += 1
@@ -47,6 +47,7 @@ class Personatge:
             if self.ha_arribat_a_la_final():
                 self.recompensa.sumar_recompensa(reward_final)
                 self.recompensa.retorn_descomptat(reward_final, self.iteraccio)
+                self.final = True
                 print("He sumat", reward_final, "a la recompensa")
                 print("Personatge ha arribat a la casella final")
             else:
@@ -103,7 +104,7 @@ class Personatge:
 
         else:
             print("Aniré a", nova_fila, nova_columna)
-        return nova_fila, nova_columna, fora
+        return nova_fila, nova_columna
 
     def ha_arribat_a_la_final(self):
         return (
@@ -135,6 +136,12 @@ class Personatge:
             return "L"
         if dif_col == 1:
             return "R"
+        
+    def var_fora(self):
+        return self.fora
+    
+    def var_final(self):
+        return self.final
 
 
 # estat_Test = (0, 0)
