@@ -16,3 +16,9 @@ Discounted error: 3.7697814000000007
 Inici: (1, 0)
 Puntuacio final: 2.0
 Discounted error: 1.8
+Inici: (1, 0)
+Puntuacio final: 1.0
+Discounted error: 0.9
+Inici: (0, 0)
+Puntuacio final: -19.0
+Discounted error: -11.6068581

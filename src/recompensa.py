@@ -20,7 +20,7 @@ class Recompensa:
 import numpy as np
 
 
-def State_Value_calc(reward, Policy_prob, state_value):
+def state_Value_calc(reward, Policy_prob, state_value):
     new_state_value = reward + gamma * np.dot(Policy_prob, state_value)
     return new_state_value
 

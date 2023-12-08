@@ -11,6 +11,7 @@ class MarejatError(Exception):
 random.seed(42)
 
 
+
 class Personatge:
     def __init__(self, graella, estat_inicial, recompensa):
         self.graella = graella
@@ -18,17 +19,16 @@ class Personatge:
         self.caselles_visitades = {}
         self.recompensa = recompensa
         self.iteraccio = 0
+        self.fora = False
 
     def accio_reward(self):
         self.iteraccio += 1
-        reward = self.estat_actual.propietats["reward"]
-        self.recompensa.sumar_recompensa(reward)
-        self.recompensa.retorn_descomptat(reward, self.iteraccio)
-        print("He sumat", reward, "a la recompensa")
+        
         print("Llegint policy...")
         policy = self.estat_actual.propietats["policy"]
         nova_fila, nova_columna = self.obtenir_nova_posicio(policy)
 
+        #Evitar bucles
         if (nova_fila, nova_columna) in self.caselles_visitades:
             self.caselles_visitades[(nova_fila, nova_columna)] += 1
         else:
@@ -37,7 +37,7 @@ class Personatge:
         if self.caselles_visitades[(nova_fila, nova_columna)] > mareig:
             raise MarejatError("M'he marejat!")
 
-        if self.esta_fora_del_limit(nova_fila, nova_columna):
+        if self.fora == True:
             self.recompensa.sumar_recompensa(reward_fora)
             self.recompensa.retorn_descomptat(reward_fora, self.iteraccio)
             nova_fila, nova_columna = self.estat_actual.fila, self.estat_actual.columna
@@ -49,6 +49,11 @@ class Personatge:
                 self.recompensa.retorn_descomptat(reward_final, self.iteraccio)
                 print("He sumat", reward_final, "a la recompensa")
                 print("Personatge ha arribat a la casella final")
+            else:
+                reward = self.estat_actual.propietats["reward"]
+                self.recompensa.sumar_recompensa(reward)
+                self.recompensa.retorn_descomptat(reward, self.iteraccio)
+                print("He sumat", reward, "a la recompensa")
         return nova_fila, nova_columna
 
     def mostrar_posicio(self):
@@ -94,9 +99,11 @@ class Personatge:
             pass
         if self.esta_fora_del_limit(nova_fila, nova_columna):
             print("No em puc moure, hi ha una barrera")
+            self.fora = True
+
         else:
             print("Aniré a", nova_fila, nova_columna)
-        return nova_fila, nova_columna
+        return nova_fila, nova_columna, fora
 
     def ha_arribat_a_la_final(self):
         return (

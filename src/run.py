@@ -21,7 +21,7 @@ if len(sys.argv) > 1:
     # Converteix la cadena de text a una tupla de coordenades
     inici = tuple(map(int, inici_str.split(",")))
 else:
-    inici = (1, 0)
+    inici = (0, 0)
 
 estat_inicial = graella[inici[0]][inici[1]]
 
@@ -46,7 +46,7 @@ try:
         nova_fila, nova_columna = personatge.accio_reward()
         print("Pasa feta!\n")
 
-        if personatge.ha_arribat_a_la_final():
+        if personatge.fora == True:
             break
 
         if personatge.esta_fora_del_limit(nova_fila, nova_columna):
